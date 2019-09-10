@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rutasbolivia.R
 import com.example.rutasbolivia.model.Region
@@ -28,13 +29,17 @@ class RegionListAdapter (private val list: ArrayList<Region>, private val contex
         holder.bindItem(list[position])
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItem(region: Region) {
             val route = itemView.findViewById<TextView>(R.id.route_id)
             val distance = itemView.findViewById<TextView>(R.id.distance)
 
             route.text = region.name
             distance.text = region.distance
+
+            itemView.setOnClickListener {
+                Toast.makeText(context, route.text, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
