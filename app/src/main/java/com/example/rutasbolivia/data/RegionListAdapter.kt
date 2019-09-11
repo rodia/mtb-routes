@@ -1,12 +1,14 @@
 package com.example.rutasbolivia.data
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rutasbolivia.MapsActivity
 import com.example.rutasbolivia.R
 import com.example.rutasbolivia.model.Region
 import kotlinx.android.synthetic.main.route_layout.view.*
@@ -38,7 +40,9 @@ class RegionListAdapter (private val list: ArrayList<Region>, private val contex
             distance.text = region.distance
 
             itemView.setOnClickListener {
-                Toast.makeText(context, route.text, Toast.LENGTH_SHORT).show()
+                val intent = Intent(context, MapsActivity::class.java).apply {
+                }
+                context.startActivity(intent)
             }
         }
     }
