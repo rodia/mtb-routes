@@ -2,39 +2,57 @@ package com.example.rutasbolivia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telecom.Call
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rutasbolivia.data.RegionListAdapter
-import com.example.rutasbolivia.model.Region
+import com.example.rutasbolivia.model.RegionListAdapter
+import com.example.rutasbolivia.model.ApiAdapter
+import com.example.rutasbolivia.model.Trail
 import kotlinx.android.synthetic.main.activity_main.*
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private var adapter: RegionListAdapter? = null
-    private var regionList: ArrayList<Region>? = null
+    private var trailList: ArrayList<Trail>? = null
     private var layoutManager: RecyclerView.LayoutManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        regionList = ArrayList<Region>()
+        trailList = ArrayList<Trail>()
         layoutManager = LinearLayoutManager(this)
-        adapter = RegionListAdapter(regionList!!, this)
+        adapter = RegionListAdapter(trailList!!, this)
 
         myRecyclerView.layoutManager = layoutManager
         myRecyclerView.adapter = adapter
 
-        loadData(regionList)
-        adapter!!.notifyDataSetChanged()
-    }
+        val apiAdapter = ApiAdapter()
+        val apiService = apiAdapter.getClientService()
+        val call = apiService.getAllCountries()
 
-    private fun loadData(regionList: ArrayList<Region>?) {
-        regionList?.add(Region("Region 1", "200"))
-        regionList?.add(Region("Region 2", "200"))
-        regionList?.add(Region("Region 3", "200"))
-        regionList?.add(Region("Region 4", "200"))
-        regionList?.add(Region("Region 5", "200"))
-        regionList?.add(Region("Region 6", "200"))
-        regionList?.add(Region("Region 7", "200"))
+        call.enqueue(object : Callback<JsonArray> {
+            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
+                Log.e("ERROR: ", t.message)
+                t.stackTrace
+            }
+
+            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
+
+                val offersJsonArray = response.body().asJsonArray
+                offersJsonArray?.forEach { jsonElement: JsonElement ->
+                    var jsonObject = jsonElement.asJsonObject
+                }
+                //VIEW
+
+                //VIEW
+            }
+        })
+        adapter!!.notifyDataSetChanged()
     }
 }
