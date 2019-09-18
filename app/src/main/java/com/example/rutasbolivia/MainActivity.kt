@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
 
-                val offersJsonArray = response.body().asJsonArray
+                val offersJsonArray = response.body()?.asJsonArray
                 offersJsonArray?.forEach { jsonElement: JsonElement ->
                     var jsonObject = jsonElement.asJsonObject
                 }
