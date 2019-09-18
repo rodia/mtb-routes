@@ -1,19 +1,14 @@
-package com.example.rutasbolivia.data
+package com.example.rutasbolivia.model
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rutasbolivia.MapsActivity
 import com.example.rutasbolivia.R
-import com.example.rutasbolivia.model.Region
-import kotlinx.android.synthetic.main.route_layout.view.*
 
-class RegionListAdapter (private val list: ArrayList<Region>, private val context: Context) : RecyclerView.Adapter<RegionListAdapter.ViewHolder>() {
+class RegionListAdapter (private val list: ArrayList<Trail>, private val context: Context) : RecyclerView.Adapter<RegionListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -32,17 +27,17 @@ class RegionListAdapter (private val list: ArrayList<Region>, private val contex
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindItem(region: Region) {
+        fun bindItem(trail: Trail) {
             val route = itemView.findViewById<TextView>(R.id.route_id)
             val distance = itemView.findViewById<TextView>(R.id.distance)
 
-            route.text = region.name
-            distance.text = region.distance
+            route.text = trail.name
+            distance.text = trail.distance
 
             itemView.setOnClickListener {
-                val intent = Intent(context, MapsActivity::class.java).apply {
-                }
-                context.startActivity(intent)
+//                val intent = Intent(context, MapsActivity::class.java).apply {
+//                }
+//                context.startActivity(intent)
             }
         }
     }
